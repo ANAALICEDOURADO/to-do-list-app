@@ -5,4 +5,10 @@ export const theme = {
     third: "#208674",
     white: "#ffffff",
   },
+  fonts: {
+    regular: "Poppins_400Regular",
+    medium: "  Poppins_500Medium",
+    semibold: "Poppins_600SemiBold",
+    bold: "Poppins_700Bold",
+  },
 };
