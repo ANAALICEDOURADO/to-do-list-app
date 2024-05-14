@@ -1,6 +1,10 @@
 import styled from "styled-components/native";
 import { theme } from "../../../global/styles/theme";
 
+interface IndicatorProps {
+  active: boolean;
+}
+
 export const AreaContent = styled.View`
   flex: 120;
   height: 400px;
@@ -11,16 +15,11 @@ export const AreaContent = styled.View`
   align-items: center;
 `;
 
-export const AreaIndicator = styled.View`
-  flex: 1;
-  align-items: center;
-  margin-top: 30px;
-`;
-
-export const Indicator = styled.View`
+export const Indicator = styled.View<IndicatorProps>`
   width: 10px;
   height: 5px;
-  background-color: ${theme.colors.white};
+  background-color: ${props =>
+    props.active ? theme.colors.white : '#000'};
   margin-horizontal: 3px;
   border-radius: 5px;
 `;
@@ -69,4 +68,9 @@ export const BtnText = styled.Text`
   font-size: 20px;
 `;
 
-
+export const AreaIndicator = styled.View`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+`;
