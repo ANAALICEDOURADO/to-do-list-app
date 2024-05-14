@@ -10,6 +10,7 @@ import { StatusBar } from "react-native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from "@react-navigation/native";
 import { LoginScreen } from "./src/screens/app/LoginScreen";
+import { Routes } from "./src/routes";
 
 export default function App() {
   const Stack = createNativeStackNavigator()
@@ -27,12 +28,7 @@ export default function App() {
 
     <NavigationContainer>
       <StatusBar translucent barStyle={"light-content"} />
-      <Stack.Navigator screenOptions={{
-        headerShown: false,
-      }} >
-        <Stack.Screen name="Onboarding" component={Onboarding}/>
-        <Stack.Screen name="Login" component={LoginScreen} />
-      </Stack.Navigator>
+      <Routes />
     </NavigationContainer>
     /*<>
       <StatusBar translucent barStyle={"light-content"} />
