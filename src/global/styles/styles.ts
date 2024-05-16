@@ -5,6 +5,10 @@ export const Container = styled.View`
   flex: 1;
 `;
 
+export const Content = styled.View`
+  padding: 0 24px;
+`;
+
 export const Title = styled.Text`
   font-size: 30px;
   font-family: ${theme.fonts.bold};

@@ -15,9 +15,8 @@ export const ContentInput = styled.View<Props>`
   background-color: #fff;
   flex-direction: row;
   align-items: center;
-  border-bottom-left-radius: 8px;
-  border-bottom-right-radius: 8px;
-  border-bottom-width: 1px;
+  border-width: 1px;
+
   ${(props) =>
     props.isErrored &&
     css`

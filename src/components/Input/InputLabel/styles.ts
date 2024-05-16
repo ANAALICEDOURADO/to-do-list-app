@@ -10,7 +10,7 @@ export const Astheristic = styled.Text`
 
 export const Title = styled.Text<{ error: boolean }>`
   font-size: 16px;
-  font-family: ${theme.fonts.semiBold};
+  font-family: ${theme.fonts.semibold};
   margin-bottom: 7px;
   color: ${({ error }) => (error ? "#ff0001" : "#000")};
 `;

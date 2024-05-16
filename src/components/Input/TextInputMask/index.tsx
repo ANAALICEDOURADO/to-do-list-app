@@ -10,7 +10,7 @@ import React from "react";
 
 interface InputProps extends TextInputMaskProps {
   placeholder?: string;
-  control?: Control<any>;
+  control: Control<any>;
   errors?: FieldError;
   isActivePassword?: boolean;
   name: string;
