@@ -19,7 +19,7 @@ export const Indicator = styled.View<IndicatorProps>`
   width: 10px;
   height: 5px;
   background-color: ${props =>
-    props.active ? theme.colors.white : '#000'};
+    props.active ? theme.colors.white : theme.colors.primary};
   margin-horizontal: 3px;
   border-radius: 5px;
 `;

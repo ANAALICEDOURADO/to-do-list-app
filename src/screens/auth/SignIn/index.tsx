@@ -1,29 +1,38 @@
 import { Input } from "../../../components/Input";
 import { Container, Content } from "../../../global/styles/styles";
-
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { Text, TouchableOpacity } from "react-native";
+import { Text, TouchableOpacity, View, StyleSheet } from "react-native";
 import { Spacer } from "../../../components/Spacer";
-
-import IconNormal from "../../../assets/icons/EyeClosed.svg";
-import IconError from "../../../assets/icons/EyeClosedRed.svg";
+import { Title, theme } from "../../../global/styles/styles";
+import NormalIcon from '../../../assets/icons/EyeClosed.svg'
+import ErrorIcon from '../../../assets/icons/EyeClosedRed.svg'
+import Elipse9 from '../../../assets/Ellipse 9.svg'
+import Elipse10 from '../../../assets/Ellipse 10.svg'
 
 export const SignIn = () => {
+  type dataFormProps = {
+    name: string;
+    email: string;
+    password: string;
+    confirmPassword: string;
+  }
+
   const formSchema = yup.object({
     name: yup
       .string()
-      .required("Campo obrigatório")
-      .min(8, "Digite pelo menos 8 dígitos"),
+      .required("Campo obrigatório"),
     email: yup.string().required("Campo obrigatório").email(),
+    password: yup.string().required('Campo Obrigatório').min(8, 'Digite pelo menos 8 digitos'),
+    confirmPassword: yup.string().required('Campo obrigatório').oneOf([yup.ref('password')], 'A confirmação deve ser igual a senha')
   });
 
   const {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<{ name: string; email: string }>({
+  } = useForm<dataFormProps>({
     resolver: yupResolver(formSchema),
   });
 
@@ -33,29 +42,22 @@ export const SignIn = () => {
 
   return (
     <Container style={{ marginTop: 60 }}>
+      <Elipse9 style={styles.elipse} />
+      <Elipse10 style={styles.elipse10} />
       <Spacer height={50} />
+      
       <Content>
+      <View><Title>Sign In</Title></View>
         <Input.Root>
-          <Input.Label label="Nome" errors={errors?.name!} />
-          <Input.Content errors={errors?.name!}>
-            <Input.TextInput
-              control={control}
-              name="name"
-              placeholder="digite o seu nome"
-            />
-            <Input.Icon icon={<IconNormal />} iconError={<IconError />} />
+          <Input.Content errors={errors?.email!}>
+            <Input.TextInput placeholder="E-mail" control={control} name="email" />
           </Input.Content>
         </Input.Root>
         <Spacer height={20} />
         <Input.Root>
-          <Input.Label label="E-mail" errors={errors?.email!} />
-          <Input.Content errors={errors?.email!}>
-            <Input.TextInput
-              control={control}
-              name="email"
-              placeholder="digite seu e-mail"
-            />
-            <Input.Icon icon={<IconNormal />} iconError={<IconError />} />
+          <Input.Content errors={errors?.password!}>
+            <Input.TextInput placeholder="Senha" control={control} name="password" />
+            <Input.Icon icon={<NormalIcon />} iconError={<ErrorIcon/>} />
           </Input.Content>
         </Input.Root>
 
@@ -75,3 +77,17 @@ export const SignIn = () => {
     </Container>
   );
 };
+
+const styles = StyleSheet.create({
+  elipse:{
+    position: 'absolute',
+    top: -10,
+    right: 0,
+    //transform: [{ rotate: '90deg' }],
+  },
+  elipse10:{
+    position: 'absolute',
+    top: -10,
+    right: 0
+  }
+})

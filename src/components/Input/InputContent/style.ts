@@ -11,12 +11,13 @@ export const Container = styled.View<Props>`
 
 export const ContentInput = styled.View<Props>`
   width: 100%;
-  height: 35px;
+  height: 50px;
   background-color: #fff;
   flex-direction: row;
   align-items: center;
   border-width: 1px;
-
+  border-color: ${theme.colors.secondary};
+  border-radius: 15px;
   ${(props) =>
     props.isErrored &&
     css`
