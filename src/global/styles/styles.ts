@@ -3,7 +3,7 @@ import { theme } from "./theme";
 
 export const Container = styled.View`
   flex: 1;
-  background-color: ${theme.colors.white}
+  background-color: ${theme.colors.white};
 `;
 
 export const Content = styled.View`

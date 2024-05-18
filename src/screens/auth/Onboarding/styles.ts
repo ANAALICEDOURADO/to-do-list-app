@@ -50,7 +50,7 @@ export const AreaBtn = styled.View`
 
 export const StartBtn = styled.TouchableOpacity`
   background-color: ${theme.colors.white};
-  border-radius: 50px;
+  border-radius: 15px;
   padding: 20px;
   margin: 0 90px;
 `;
