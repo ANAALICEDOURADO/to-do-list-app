@@ -1,13 +1,11 @@
-import { ButtonActions } from "./ButtonActions";
-import { ButtonContent } from "./ButtonContent";
-import { ButtonIcon } from "./ButtonIcon";
-import { ButtonRoot } from "./ButtonRoot";
-import { ButtonText } from "./ButtonText";
+import { ButtonContent } from "./ButtonContent/ButtonContent";
+import { ButtonIcon } from "./ButtonIcon/ButtonIcon";
+import { ButtonRoot } from "./ButtonRoot/ButtonRoot";
+import { ButtonText } from "./ButtonText/ButtonText";
 
 export const Button = {
-    Root: ButtonRoot,
-    Content: ButtonContent,
-    Icon: ButtonIcon,
-    Actions: ButtonActions,
-    Text: ButtonText,
-}
+  Root: ButtonRoot,
+  Content: ButtonContent,
+  Icon: ButtonIcon,
+  Text: ButtonText,
+};

@@ -3,7 +3,15 @@ import { Container, Content } from "../../../global/styles/styles";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { View, StyleSheet, Image } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Image,
+  Text,
+  Modal,
+  Pressable,
+  Alert,
+} from "react-native";
 import { Spacer } from "../../../components/Spacer";
 import { Title, theme } from "../../../global/styles/styles";
 import NormalIcon from "../../../assets/icons/EyeClosed.svg";
@@ -11,27 +19,26 @@ import ErrorIcon from "../../../assets/icons/EyeClosedRed.svg";
 import Elipse9 from "../../../assets/Ellipse 9.svg";
 import Elipse10 from "../../../assets/Ellipse 10.svg";
 import { Button } from "../../../components/Button";
-import IconeAdd from '../../../assets/icons/add.svg'
+import IconeAdd from "../../../assets/icons/add.svg";
+import { useState } from "react";
 
 export const SignIn = () => {
   type dataFormProps = {
-    name: string;
     email: string;
     password: string;
-    confirmPassword: string;
   };
 
   const formSchema = yup.object({
-    name: yup.string().required("Campo obrigatório"),
     email: yup.string().required("Campo obrigatório").email(),
     password: yup
       .string()
       .required("Campo Obrigatório")
       .min(8, "Digite pelo menos 8 digitos"),
-    confirmPassword: yup
+    /*     name: yup.string().required("Campo obrigatório"), */
+    /*     confirmPassword: yup
       .string()
-      .required("Campo obrigatório")
-      .oneOf([yup.ref("password")], "A confirmação deve ser igual a senha"),
+      .required("Campo obrigatório") 
+      .oneOf([yup.ref("password")], "A confirmação deve ser igual a senha"), */
   });
 
   const {
@@ -43,8 +50,11 @@ export const SignIn = () => {
   });
 
   const onSubmit = (data: dataFormProps) => {
-    console.log( data );
+    console.log({ data });
+    setModalVisible(true);
   };
+
+  const [modalVisible, setModalVisible] = useState(false);
 
   return (
     <Container style={{ marginTop: 60 }}>
@@ -85,34 +95,35 @@ export const SignIn = () => {
         </Input.Root>
 
         <Button.Root>
-          <Button.Content>
-            <Button.Icon icon={<IconeAdd/>} />
-            <Button.Text text="Sign In"/>
+          <Button.Content onPress={handleSubmit(onSubmit)}>
+            <Button.Icon icon={<IconeAdd />} />
+            <Button.Text text="Sign In" />
           </Button.Content>
         </Button.Root>
-        {/* <View>
-          <TouchableOpacity
-            style={{
-              height: 50,
-              backgroundColor: theme.colors.third,
-              alignItems: "center",
-              justifyContent: "center",
-              marginTop: 100,
-              borderRadius: 15,
+
+        <View style={styles.centeredView}>
+          <Modal
+            animationType="slide"
+            transparent={true}
+            visible={modalVisible}
+            onRequestClose={() => {
+              Alert.alert("Modal has been closed.");
+              setModalVisible(!modalVisible);
             }}
-            onPress={handleSubmit(onSubmit)}
           >
-            <Text
-              style={{
-                color: "#FFF",
-                fontSize: 18,
-                fontFamily: theme.fonts.semibold,
-              }}
-            >
-              Sign In
-            </Text>
-          </TouchableOpacity>
-        </View> */}
+            <View style={styles.centeredView}>
+              <View style={styles.modalView}>
+                <Text style={styles.modalText}>Hello World!</Text>
+                <Pressable
+                  style={[styles.button, styles.buttonClose]}
+                  onPress={() => setModalVisible(!modalVisible)}
+                >
+                  <Text style={styles.textStyle}>Hide Modal</Text>
+                </Pressable>
+              </View>
+            </View>
+          </Modal>
+        </View>
       </Content>
     </Container>
   );
@@ -137,5 +148,46 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginTop: 100,
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 22,
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  button: {
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2,
+  },
+  buttonOpen: {
+    backgroundColor: "#F194FF",
+  },
+  buttonClose: {
+    backgroundColor: "#2196F3",
+  },
+  textStyle: {
+    color: "white",
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: "center",
   },
 });
