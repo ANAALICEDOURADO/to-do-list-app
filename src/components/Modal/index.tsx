@@ -1,10 +1,10 @@
 
-import { ModalActions } from "./ModalActions";
-import { ModalContent } from "./ModalContent";
-import { ModalIcon } from "./ModalIcon";
-import { ModalRoot } from "./ModalRoot";
-import { ModalTitle } from "./ModalTitle";
-import { ModalSubtitle } from "./ModalSubtitle";
+import { ModalActions } from "./ModalActions/ModalActions";
+import { ModalContent } from "./ModalContent/ModalContent";
+import { ModalIcon } from "./ModalIcon/ModalIcon";
+import { ModalRoot } from "./ModalRoot/ModalRoot";
+import { ModalTitle } from "./ModalTitle/ModalTitle";
+import { ModalSubtitle } from "./ModalSubtitle/ModalSubtitle";
 
 export const Modal1 = {
   Root: ModalRoot,

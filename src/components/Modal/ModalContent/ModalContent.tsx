@@ -1,5 +1,5 @@
 import { Modal, ModalProps, StyleSheet, View } from "react-native";
-import { Content, theme } from "../../global/styles/styles";
+import { Content, theme } from "../../../global/styles/styles";
 import { ReactNode } from "react";
 
 type Props = ModalProps & {
@@ -37,13 +37,13 @@ const styles = StyleSheet.create({
       borderRadius: 15,
       padding: 35,
       alignItems: "center",
-      shadowColor: theme.colors.primary,
+      shadowColor: theme.colors.third,
       shadowOffset: {
         width: 0,
         height: 2,
       },
-      shadowOpacity: 0.25,
-      shadowRadius: 4,
-      elevation: 5,
+      shadowOpacity: 0.15,
+      shadowRadius: 5,
+      elevation: 10,
     }
   });

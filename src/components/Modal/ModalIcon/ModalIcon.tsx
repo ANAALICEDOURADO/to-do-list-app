@@ -1,5 +1,5 @@
 import { ElementType } from "react"
-import { theme } from "../../global/styles/theme"
+import { theme } from "../../../global/styles/theme"
 
 interface ModalIconProps {
     icon: ElementType

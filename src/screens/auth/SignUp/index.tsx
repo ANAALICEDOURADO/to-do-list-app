@@ -1,9 +1,9 @@
 import { Input } from "../../../components/Input";
-import { Container, Content } from "../../../global/styles/styles";
+import { Container, Content, theme } from "../../../global/styles/styles";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { View, StyleSheet, Image, Text, TouchableOpacity } from "react-native";
+import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
 import { Spacer } from "../../../components/Spacer";
 import { Title } from "../../../global/styles/styles";
 import NormalIcon from "../../../assets/icons/EyeClosed.svg";
@@ -17,16 +17,19 @@ import { Feather } from "@expo/vector-icons";
 import * as S from "./styles";
 import { useNavigation } from "@react-navigation/native";
 
-export const SignIn = () => {
+export const SignUp = () => {
+  const [modalVisible, setModalVisible] = useState(false);
   const { navigate } = useNavigation();
 
   const teste = () => {
-    navigate("SignUp");
+    navigate("SignIn");
   };
 
   type dataFormProps = {
+    name: string;
     email: string;
     password: string;
+    confirmPassword: string;
   };
 
   const formSchema = yup.object({
@@ -35,11 +38,11 @@ export const SignIn = () => {
       .string()
       .required("Campo Obrigatório")
       .min(8, "Digite pelo menos 8 digitos"),
-    /*     name: yup.string().required("Campo obrigatório"), */
-    /*     confirmPassword: yup
+    name: yup.string().required("Campo obrigatório"),
+    confirmPassword: yup
       .string()
-      .required("Campo obrigatório") 
-      .oneOf([yup.ref("password")], "A confirmação deve ser igual a senha"), */
+      .required("Campo obrigatório")
+      .oneOf([yup.ref("password")], "A confirmação deve ser igual a senha"),
   });
 
   const {
@@ -51,29 +54,48 @@ export const SignIn = () => {
   });
 
   const onSubmit = (data: dataFormProps) => {
+    setModalVisible(true);
     console.log({ data });
   };
 
   return (
-    <Container style={{ marginTop: 1 }}>
-      <View style={styles.areaLogo}>
-        <Image
-          source={require("../../../assets/logo.png")}
-          style={styles.logo}
-        />
-      </View>
-
-     {/*  <Elipse9 style={styles.elipse} />
-      <Elipse10 style={styles.elipse10} /> */}
-      <Spacer height={10} />
+    <Container style={{ marginTop: 60 }}>
+      <Elipse9 style={styles.elipse} />
+      <Elipse10 style={styles.elipse10} />
 
       <Content>
-        <View>
-          <Title>Sign In</Title>
+        <View style={{width: 100}} >
+          <Button.Root>
+            <Button.Content
+              marginTop={0}
+              backgroundColor={theme.colors.white}
+              onPress={teste}
+            >
+              <Button.Icon
+                icon={
+                  <Feather
+                    name="chevron-left"
+                    size={25}
+                    color={theme.colors.third}
+                  />
+                }
+              />
+              <Button.Text color={theme.colors.third} text="Voltar" />
+            </Button.Content>
+          </Button.Root>
         </View>
-
-        <Spacer height={40} />
         
+        <Spacer height={50} />
+
+        <View>
+          <Title>Sign Up</Title>
+        </View>
+        <Input.Root>
+          <Input.Content errors={errors?.name!}>
+            <Input.TextInput placeholder="Nome" control={control} name="name" />
+          </Input.Content>
+        </Input.Root>
+        <Spacer height={20} />
         <Input.Root>
           <Input.Content errors={errors?.email!}>
             <Input.TextInput
@@ -94,18 +116,39 @@ export const SignIn = () => {
             <Input.Icon icon={<NormalIcon />} iconError={<ErrorIcon />} />
           </Input.Content>
         </Input.Root>
+        <Spacer height={20} />
+        <Input.Root>
+          <Input.Content errors={errors?.confirmPassword!}>
+            <Input.TextInput
+              placeholder="Confirme sua senha"
+              control={control}
+              name="confirmPassword"
+            />
+            <Input.Icon icon={<NormalIcon />} iconError={<ErrorIcon />} />
+          </Input.Content>
+        </Input.Root>
 
         <Button.Root>
           <Button.Content marginTop={100} onPress={handleSubmit(onSubmit)}>
-            <Button.Text text="Sign In" />
+            <Button.Text text="Sign Up" />
           </Button.Content>
         </Button.Root>
 
         <Spacer height={10} />
 
         <S.GoToSignUp onPress={teste}>
-          <S.Text>Ainda não possui uma conta?</S.Text>
+          <S.Text>Já possui uma conta?</S.Text>
         </S.GoToSignUp>
+
+        <Modal1.Root>
+          <Modal1.Content modalVisible={modalVisible}>
+            <Modal1.Icon icon={Feather} />
+            <Spacer height={30} />
+            <Modal1.Title title="Perfil criado com sucesso!" />
+            <Modal1.Subtitle subtitle="Agora você pode entrar em seu novo perfil a qualquer momento." />
+            <Modal1.Actions onClose={() => setModalVisible(false)} />
+          </Modal1.Content>
+        </Modal1.Root>
       </Content>
     </Container>
   );
@@ -114,12 +157,12 @@ export const SignIn = () => {
 const styles = StyleSheet.create({
   elipse: {
     position: "absolute",
-    top: 20,
+    top: -10,
     right: 0,
   },
   elipse10: {
     position: "absolute",
-    top: 20,
+    top: -10,
     right: 0,
   },
   logo: {
@@ -128,7 +171,7 @@ const styles = StyleSheet.create({
   },
   areaLogo: {
     alignItems: "center",
-    justifyContent: 'center',
+    justifyContent: "center",
     marginTop: 100,
   },
 });

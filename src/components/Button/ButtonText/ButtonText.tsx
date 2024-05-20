@@ -1,14 +1,17 @@
-import { View } from "react-native";
-import * as S from './styles'
+import { TextProps, View } from "react-native";
+import * as S from "./styles";
 
-interface ButtonTextProps {
-    text: string;
+export interface ButtonTextProps extends TextProps {
+  text: string;
+  color?: string;
 }
 
-export const ButtonText = ({text}: ButtonTextProps) => {
+export const ButtonText = ({ text, color, ...rest }: ButtonTextProps) => {
   return (
     <View>
-      <S.Texto>{text}</S.Texto>
+      <S.Texto {...rest} color={color}>
+        {text}
+      </S.Texto>
     </View>
   );
 };
