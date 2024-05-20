@@ -1,19 +1,11 @@
 import { Input } from "../../../components/Input";
-import { Container, Content } from "../../../global/styles/styles";
+import { Container, Content, theme } from "../../../global/styles/styles";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import {
-  View,
-  StyleSheet,
-  Image,
-  Text,
-  Modal,
-  Pressable,
-  Alert,
-} from "react-native";
+import { View, StyleSheet, Image } from "react-native";
 import { Spacer } from "../../../components/Spacer";
-import { Title, theme } from "../../../global/styles/styles";
+import { Title } from "../../../global/styles/styles";
 import NormalIcon from "../../../assets/icons/EyeClosed.svg";
 import ErrorIcon from "../../../assets/icons/EyeClosedRed.svg";
 import Elipse9 from "../../../assets/Ellipse 9.svg";
@@ -21,8 +13,12 @@ import Elipse10 from "../../../assets/Ellipse 10.svg";
 import { Button } from "../../../components/Button";
 import IconeAdd from "../../../assets/icons/add.svg";
 import { useState } from "react";
+import { Modal1 } from "../../../components/Modal";
+import { Feather } from "@expo/vector-icons";
 
 export const SignIn = () => {
+  const [modalVisible, setModalVisible] = useState(false);
+
   type dataFormProps = {
     email: string;
     password: string;
@@ -50,11 +46,9 @@ export const SignIn = () => {
   });
 
   const onSubmit = (data: dataFormProps) => {
-    console.log({ data });
     setModalVisible(true);
+    console.log({ data });
   };
-
-  const [modalVisible, setModalVisible] = useState(false);
 
   return (
     <Container style={{ marginTop: 60 }}>
@@ -95,35 +89,21 @@ export const SignIn = () => {
         </Input.Root>
 
         <Button.Root>
-          <Button.Content onPress={handleSubmit(onSubmit)}>
+          <Button.Content marginTop={100} onPress={handleSubmit(onSubmit)}>
             <Button.Icon icon={<IconeAdd />} />
             <Button.Text text="Sign In" />
           </Button.Content>
         </Button.Root>
 
-        <View style={styles.centeredView}>
-          <Modal
-            animationType="slide"
-            transparent={true}
-            visible={modalVisible}
-            onRequestClose={() => {
-              Alert.alert("Modal has been closed.");
-              setModalVisible(!modalVisible);
-            }}
-          >
-            <View style={styles.centeredView}>
-              <View style={styles.modalView}>
-                <Text style={styles.modalText}>Hello World!</Text>
-                <Pressable
-                  style={[styles.button, styles.buttonClose]}
-                  onPress={() => setModalVisible(!modalVisible)}
-                >
-                  <Text style={styles.textStyle}>Hide Modal</Text>
-                </Pressable>
-              </View>
-            </View>
-          </Modal>
-        </View>
+        <Modal1.Root>
+          <Modal1.Content modalVisible={modalVisible}>
+            <Modal1.Icon icon={Feather} />
+            <Spacer height={30} />
+            <Modal1.Title title="Perfil criado com sucesso!" />
+            <Modal1.Subtitle subtitle="Agora você pode entrar em seu novo perfil a qualquer momento" />
+            <Modal1.Actions onClose={() => setModalVisible(false)} />
+          </Modal1.Content>
+        </Modal1.Root>
       </Content>
     </Container>
   );
@@ -148,46 +128,5 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginTop: 100,
-  },
-  centeredView: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 22,
-  },
-  modalView: {
-    margin: 20,
-    backgroundColor: "white",
-    borderRadius: 20,
-    padding: 35,
-    alignItems: "center",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
-  },
-  button: {
-    borderRadius: 20,
-    padding: 10,
-    elevation: 2,
-  },
-  buttonOpen: {
-    backgroundColor: "#F194FF",
-  },
-  buttonClose: {
-    backgroundColor: "#2196F3",
-  },
-  textStyle: {
-    color: "white",
-    fontWeight: "bold",
-    textAlign: "center",
-  },
-  modalText: {
-    marginBottom: 15,
-    textAlign: "center",
   },
 });

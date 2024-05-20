@@ -5,5 +5,5 @@ export const Texto = styled.Text`
     color: #FFF;
     font-size: 18px;
     font-family: ${theme.fonts.semibold};
-    padding-left: 12px;
+    padding: 12px;
 `;

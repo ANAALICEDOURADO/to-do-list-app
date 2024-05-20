@@ -9,6 +9,6 @@ export const ContentButton = styled.TouchableOpacity<ButtonContentProps>`
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  margin-top: 100px;
+  margin-top: ${({marginTop}) => marginTop ? marginTop : 30};
   border-radius: 15px;
 `;
