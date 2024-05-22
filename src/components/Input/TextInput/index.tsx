@@ -27,7 +27,7 @@ export const TextInput = ({
   return (
     <S.TextInput
       placeholder={placeholder}
-      placeholderTextColor={theme.colors.primary}
+      placeholderTextColor={theme.colors.grey}
       onChangeText={field.onChange}
       value={field.value}
       secureTextEntry={isActivePassword}

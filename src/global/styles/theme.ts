@@ -4,7 +4,8 @@ export const theme = {
     secondary: "#D4EAE6",
     third: "#208674",
     white: "#ffffff",
-    red: '#ff0000'
+    red: '#ff0000',
+    grey: '#A4A4A4'
   },
   fonts: {
     regular: "Poppins_400Regular",

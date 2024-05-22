@@ -1,20 +1,14 @@
 import { Input } from "../../../components/Input";
-import { Container, Content } from "../../../global/styles/styles";
+import { Container, Content, theme } from "../../../global/styles/styles";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { View, StyleSheet, Image, Text, TouchableOpacity } from "react-native";
+import { View, StyleSheet, Image } from "react-native";
 import { Spacer } from "../../../components/Spacer";
 import { Title } from "../../../global/styles/styles";
 import NormalIcon from "../../../assets/icons/EyeClosed.svg";
 import ErrorIcon from "../../../assets/icons/EyeClosedRed.svg";
-import Elipse9 from "../../../assets/Ellipse 9.svg";
-import Elipse10 from "../../../assets/Ellipse 10.svg";
 import { Button } from "../../../components/Button";
-import { useState } from "react";
-import { Modal1 } from "../../../components/Modal";
-import { Feather } from "@expo/vector-icons";
-import * as S from "./styles";
 import { useNavigation } from "@react-navigation/native";
 
 export const SignIn = () => {
@@ -35,11 +29,6 @@ export const SignIn = () => {
       .string()
       .required("Campo Obrigatório")
       .min(8, "Digite pelo menos 8 digitos"),
-    /*     name: yup.string().required("Campo obrigatório"), */
-    /*     confirmPassword: yup
-      .string()
-      .required("Campo obrigatório") 
-      .oneOf([yup.ref("password")], "A confirmação deve ser igual a senha"), */
   });
 
   const {
@@ -63,7 +52,7 @@ export const SignIn = () => {
         />
       </View>
 
-     {/*  <Elipse9 style={styles.elipse} />
+      {/*  <Elipse9 style={styles.elipse} />
       <Elipse10 style={styles.elipse10} /> */}
       <Spacer height={10} />
 
@@ -73,7 +62,7 @@ export const SignIn = () => {
         </View>
 
         <Spacer height={40} />
-        
+
         <Input.Root>
           <Input.Content errors={errors?.email!}>
             <Input.TextInput
@@ -83,7 +72,7 @@ export const SignIn = () => {
             />
           </Input.Content>
         </Input.Root>
-        <Spacer height={20} />
+        <Spacer height={30} />
         <Input.Root>
           <Input.Content errors={errors?.password!}>
             <Input.TextInput
@@ -103,9 +92,17 @@ export const SignIn = () => {
 
         <Spacer height={10} />
 
-        <S.GoToSignUp onPress={teste}>
-          <S.Text>Ainda não possui uma conta?</S.Text>
-        </S.GoToSignUp>
+        <View style={{marginTop: 170}} >
+          <Content>
+            <Button.Root >
+              <Button.Content 
+              backgroundColor={theme.colors.white}
+              onPress={teste} >
+                <Button.Text fontSize={14} color={theme.colors.third} text="Ainda não possui uma conta? | Sign Up" />
+              </Button.Content>
+            </Button.Root>
+          </Content>
+        </View>
       </Content>
     </Container>
   );
@@ -128,7 +125,7 @@ const styles = StyleSheet.create({
   },
   areaLogo: {
     alignItems: "center",
-    justifyContent: 'center',
+    justifyContent: "center",
     marginTop: 100,
   },
 });

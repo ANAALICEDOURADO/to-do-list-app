@@ -4,7 +4,7 @@ import { ButtonTextProps } from "./ButtonText";
 
 export const Texto = styled.Text<ButtonTextProps>`
     color: ${({color}) => color ? color : theme.colors.white};
-    font-size: 18px;
+    font-size: ${({fontSize}) => fontSize ? fontSize : '18px'};
     font-family: ${theme.fonts.semibold};
-    padding: 12px;
+    padding: ${({padding}) => padding ? padding : '12px'};
 `;

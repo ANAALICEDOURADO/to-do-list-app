@@ -3,7 +3,7 @@ import { Container, Content, theme } from "../../../global/styles/styles";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { Spacer } from "../../../components/Spacer";
 import { Title } from "../../../global/styles/styles";
 import NormalIcon from "../../../assets/icons/EyeClosed.svg";
@@ -14,7 +14,6 @@ import { Button } from "../../../components/Button";
 import { useState } from "react";
 import { Modal1 } from "../../../components/Modal";
 import { Feather } from "@expo/vector-icons";
-import * as S from "./styles";
 import { useNavigation } from "@react-navigation/native";
 
 export const SignUp = () => {
@@ -59,12 +58,12 @@ export const SignUp = () => {
   };
 
   return (
-    <Container style={{ marginTop: 60 }}>
+    <Container style={{ marginTop: 50, justifyContent: 'space-between' }}>
       <Elipse9 style={styles.elipse} />
       <Elipse10 style={styles.elipse10} />
 
       <Content>
-        <View style={{width: 100}} >
+        <View style={{ width: 100 }}>
           <Button.Root>
             <Button.Content
               marginTop={0}
@@ -84,18 +83,21 @@ export const SignUp = () => {
             </Button.Content>
           </Button.Root>
         </View>
-        
+
         <Spacer height={50} />
 
         <View>
           <Title>Sign Up</Title>
         </View>
+
+        <Spacer height={40} />
+
         <Input.Root>
           <Input.Content errors={errors?.name!}>
             <Input.TextInput placeholder="Nome" control={control} name="name" />
           </Input.Content>
         </Input.Root>
-        <Spacer height={20} />
+        <Spacer height={30} />
         <Input.Root>
           <Input.Content errors={errors?.email!}>
             <Input.TextInput
@@ -105,7 +107,7 @@ export const SignUp = () => {
             />
           </Input.Content>
         </Input.Root>
-        <Spacer height={20} />
+        <Spacer height={30} />
         <Input.Root>
           <Input.Content errors={errors?.password!}>
             <Input.TextInput
@@ -116,7 +118,7 @@ export const SignUp = () => {
             <Input.Icon icon={<NormalIcon />} iconError={<ErrorIcon />} />
           </Input.Content>
         </Input.Root>
-        <Spacer height={20} />
+        <Spacer height={30} />
         <Input.Root>
           <Input.Content errors={errors?.confirmPassword!}>
             <Input.TextInput
@@ -136,10 +138,6 @@ export const SignUp = () => {
 
         <Spacer height={10} />
 
-        <S.GoToSignUp onPress={teste}>
-          <S.Text>Já possui uma conta?</S.Text>
-        </S.GoToSignUp>
-
         <Modal1.Root>
           <Modal1.Content modalVisible={modalVisible}>
             <Modal1.Icon icon={Feather} />
@@ -150,6 +148,18 @@ export const SignUp = () => {
           </Modal1.Content>
         </Modal1.Root>
       </Content>
+
+      <View style={{marginBottom: 30}} >
+        <Content>
+           <Button.Root >
+              <Button.Content 
+              backgroundColor={theme.colors.white}
+              onPress={teste} >
+                <Button.Text fontSize={14} color={theme.colors.third} text="Já possui uma conta? | Sign In" />
+              </Button.Content>
+            </Button.Root>
+        </Content>
+      </View>
     </Container>
   );
 };
@@ -157,12 +167,12 @@ export const SignUp = () => {
 const styles = StyleSheet.create({
   elipse: {
     position: "absolute",
-    top: -10,
+    top: 0,
     right: 0,
   },
   elipse10: {
     position: "absolute",
-    top: -10,
+    top: 0,
     right: 0,
   },
   logo: {
