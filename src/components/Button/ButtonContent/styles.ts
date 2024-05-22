@@ -10,5 +10,5 @@ export const ContentButton = styled.TouchableOpacity<ButtonContentProps>`
   align-items: center;
   justify-content: center;
   margin-top: ${({marginTop}) => marginTop ? marginTop : 30};
-  border-radius: 15px;
+  border-radius: ${({borderRadius}) => borderRadius ? borderRadius : '15px'};
 `;

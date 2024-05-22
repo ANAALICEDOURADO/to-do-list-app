@@ -24,7 +24,7 @@ export const Main = styled.View`
 `;
 
 export const Footer = styled.View`
-  flex: 0.07;
+  flex: 0.05;
   background-color: ${theme.colors.third};
   padding: 20px 24px;
   flex-direction: row;
@@ -35,6 +35,23 @@ export const Footer = styled.View`
 export const BtnFooter = styled.TouchableOpacity`
 align-items: center;
 `
+
+export const AddTask = styled.TouchableHighlight`
+background-color: ${theme.colors.white};
+border-radius: 50px;
+width: 70px;
+height: 70px;
+align-items: center;
+justify-content: center;
+position: absolute;
+left: 160;
+top: -35;
+`
+
+export const Teste = styled.View`
+
+`
+
 export const BtnFooterText = styled.Text`
 color: ${theme.colors.white}
 `
