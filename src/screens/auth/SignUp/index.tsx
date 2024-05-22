@@ -3,7 +3,7 @@ import { Container, Content, theme } from "../../../global/styles/styles";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, StatusBar } from "react-native";
 import { Spacer } from "../../../components/Spacer";
 import { Title } from "../../../global/styles/styles";
 import NormalIcon from "../../../assets/icons/EyeClosed.svg";
@@ -18,6 +18,8 @@ import { useNavigation } from "@react-navigation/native";
 
 export const SignUp = () => {
   const [modalVisible, setModalVisible] = useState(false);
+  const [isPasswordSecure, setIsPasswordSecure] = useState(true);
+  const [isConfirmPasswordSecure, setIsConfirmPasswordSecure] = useState(true);
   const { navigate } = useNavigation();
 
   const teste = () => {
@@ -58,7 +60,7 @@ export const SignUp = () => {
   };
 
   return (
-    <Container style={{ marginTop: 50, justifyContent: 'space-between' }}>
+    <Container style={{marginTop: StatusBar.currentHeight, justifyContent: "space-between" }}>
       <Elipse9 style={styles.elipse} />
       <Elipse10 style={styles.elipse10} />
 
@@ -111,22 +113,32 @@ export const SignUp = () => {
         <Input.Root>
           <Input.Content errors={errors?.password!}>
             <Input.TextInput
+              secureTextEntry={isPasswordSecure}
               placeholder="Senha"
               control={control}
               name="password"
             />
-            <Input.Icon icon={<NormalIcon />} iconError={<ErrorIcon />} />
+            <Input.IconPassword
+              secureTextActive={isPasswordSecure}
+              errors={!!errors?.password}
+              onPressButton={() => setIsPasswordSecure(!isPasswordSecure)}
+            />
           </Input.Content>
         </Input.Root>
         <Spacer height={30} />
         <Input.Root>
           <Input.Content errors={errors?.confirmPassword!}>
             <Input.TextInput
+              secureTextEntry={isConfirmPasswordSecure}
               placeholder="Confirme sua senha"
               control={control}
               name="confirmPassword"
             />
-            <Input.Icon icon={<NormalIcon />} iconError={<ErrorIcon />} />
+            <Input.IconPassword
+              secureTextActive={isConfirmPasswordSecure}
+              errors={!!errors?.confirmPassword}
+              onPressButton={() => setIsConfirmPasswordSecure(!isConfirmPasswordSecure)}
+            />
           </Input.Content>
         </Input.Root>
 
@@ -149,15 +161,20 @@ export const SignUp = () => {
         </Modal1.Root>
       </Content>
 
-      <View style={{marginBottom: 30}} >
+      <View style={{ marginBottom: 30 }}>
         <Content>
-           <Button.Root >
-              <Button.Content 
+          <Button.Root>
+            <Button.Content
               backgroundColor={theme.colors.white}
-              onPress={teste} >
-                <Button.Text fontSize={14} color={theme.colors.third} text="Já possui uma conta? | Sign In" />
-              </Button.Content>
-            </Button.Root>
+              onPress={teste}
+            >
+              <Button.Text
+                fontSize={14}
+                color={theme.colors.third}
+                text="Já possui uma conta? | Sign In"
+              />
+            </Button.Content>
+          </Button.Root>
         </Content>
       </View>
     </Container>

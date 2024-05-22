@@ -3,18 +3,17 @@ import { Container, Content, theme } from "../../../global/styles/styles";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { View, StyleSheet, Image } from "react-native";
+import { View, StyleSheet, Image, StatusBar } from "react-native";
 import { Spacer } from "../../../components/Spacer";
 import { Title } from "../../../global/styles/styles";
-import NormalIcon from "../../../assets/icons/EyeClosed.svg";
-import ErrorIcon from "../../../assets/icons/EyeClosedRed.svg";
 import { Button } from "../../../components/Button";
 import { useNavigation } from "@react-navigation/native";
+import { useState } from "react";
 
 export const SignIn = () => {
   const { navigate } = useNavigation();
 
-  const teste = () => {
+  const goToScreen = () => {
     navigate("SignUp");
   };
 
@@ -41,10 +40,15 @@ export const SignIn = () => {
 
   const onSubmit = (data: dataFormProps) => {
     console.log({ data });
+    navigate("Main");
   };
 
+  const [isPasswordSecure, setIsPasswordSecure] = useState(true);
+
   return (
-    <Container style={{ marginTop: 1 }}>
+    <Container style={{ marginTop: StatusBar.currentHeight }}>
+      <Spacer height={30} />
+
       <View style={styles.areaLogo}>
         <Image
           source={require("../../../assets/logo.png")}
@@ -55,7 +59,6 @@ export const SignIn = () => {
       {/*  <Elipse9 style={styles.elipse} />
       <Elipse10 style={styles.elipse10} /> */}
       <Spacer height={10} />
-
       <Content>
         <View>
           <Title>Sign In</Title>
@@ -76,11 +79,16 @@ export const SignIn = () => {
         <Input.Root>
           <Input.Content errors={errors?.password!}>
             <Input.TextInput
+              secureTextEntry={isPasswordSecure}
               placeholder="Senha"
               control={control}
               name="password"
             />
-            <Input.Icon icon={<NormalIcon />} iconError={<ErrorIcon />} />
+            <Input.IconPassword
+              secureTextActive={isPasswordSecure}
+              errors={!!errors?.password}
+              onPressButton={() => setIsPasswordSecure(!isPasswordSecure)}
+            />
           </Input.Content>
         </Input.Root>
 
@@ -90,15 +98,20 @@ export const SignIn = () => {
           </Button.Content>
         </Button.Root>
 
-        <Spacer height={10} />
+        <Spacer height={195} />
 
-        <View style={{marginTop: 170}} >
+        <View>
           <Content>
-            <Button.Root >
-              <Button.Content 
-              backgroundColor={theme.colors.white}
-              onPress={teste} >
-                <Button.Text fontSize={14} color={theme.colors.third} text="Ainda não possui uma conta? | Sign Up" />
+            <Button.Root>
+              <Button.Content
+                backgroundColor={theme.colors.white}
+                onPress={goToScreen}
+              >
+                <Button.Text
+                  fontSize={14}
+                  color={theme.colors.third}
+                  text="Ainda não possui uma conta? | Sign Up"
+                />
               </Button.Content>
             </Button.Root>
           </Content>
@@ -109,16 +122,6 @@ export const SignIn = () => {
 };
 
 const styles = StyleSheet.create({
-  elipse: {
-    position: "absolute",
-    top: 20,
-    right: 0,
-  },
-  elipse10: {
-    position: "absolute",
-    top: 20,
-    right: 0,
-  },
   logo: {
     width: 120,
     height: 120,
@@ -126,6 +129,5 @@ const styles = StyleSheet.create({
   areaLogo: {
     alignItems: "center",
     justifyContent: "center",
-    marginTop: 100,
   },
 });

@@ -5,6 +5,10 @@ interface IndicatorProps {
   active: boolean;
 }
 
+interface TextProps {
+  paddingTop?: string;
+}
+
 export const AreaContent = styled.View`
   flex: 120;
   height: 400px;
@@ -24,11 +28,11 @@ export const Indicator = styled.View<IndicatorProps>`
   border-radius: 5px;
 `;
 
-export const Title = styled.Text`
+export const Title = styled.Text<TextProps>`
   font-size: 30px;
   font-family: ${theme.fonts.bold};
   text-align: center;
-  padding-top: 45px;
+  padding-top: ${({paddingTop}) => paddingTop ? paddingTop : '45px'};
 `;
 
 export const Subtitle = styled.Text`

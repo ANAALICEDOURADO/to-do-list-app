@@ -9,7 +9,6 @@ import Onboarding from "./src/screens/auth/Onboarding";
 import { StatusBar } from "react-native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from "@react-navigation/native";
-import { LoginScreen } from "./src/screens/app/LoginScreen";
 import { Routes } from "./src/routes";
 
 export default function App() {
@@ -27,7 +26,7 @@ export default function App() {
   return (
 
     <NavigationContainer>
-      <StatusBar translucent barStyle={"light-content"} />
+      <StatusBar translucent backgroundColor={'#208674'} barStyle={"light-content"} />
       <Routes />
     </NavigationContainer>
     /*<>

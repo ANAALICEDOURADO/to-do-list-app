@@ -6,16 +6,18 @@ export interface ButtonContentProps extends TouchableOpacityProps {
   children: ReactNode;
   backgroundColor?: string;
   marginTop?: number;
+  flexDirection?: string;
 }
 
 export const ButtonContent = ({
   backgroundColor,
   marginTop,
+  flexDirection,
   children,
   ...rest
 }: ButtonContentProps) => {
   return (
-    <S.ContentButton {...rest} marginTop={marginTop} backgroundColor={backgroundColor}>
+    <S.ContentButton {...rest} flexDirection={flexDirection}  marginTop={marginTop} backgroundColor={backgroundColor}>
       {children}
     </S.ContentButton>
   );

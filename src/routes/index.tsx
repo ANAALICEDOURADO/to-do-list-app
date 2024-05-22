@@ -1,7 +1,10 @@
-import { AuthRoutes } from "./auth.routes"
+import { AppRoutes } from "./app.routes";
+import { AuthRoutes } from "./auth.routes";
 
 export const Routes = () => {
-    return(
-        <AuthRoutes />
-    )
-}
+    const isAuthenticated = true; // Replace with your authentication logic
+  
+    return (
+      isAuthenticated ? <AppRoutes /> : <AuthRoutes />
+    );
+  };
