@@ -6,8 +6,6 @@ import * as yup from "yup";
 import { View, StyleSheet, StatusBar } from "react-native";
 import { Spacer } from "../../../components/Spacer";
 import { Title } from "../../../global/styles/styles";
-import NormalIcon from "../../../assets/icons/EyeClosed.svg";
-import ErrorIcon from "../../../assets/icons/EyeClosedRed.svg";
 import Elipse9 from "../../../assets/Ellipse 9.svg";
 import Elipse10 from "../../../assets/Ellipse 10.svg";
 import { Button } from "../../../components/Button";
@@ -17,6 +15,7 @@ import { Feather } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 
 export const SignUp = () => {
+
   const [modalVisible, setModalVisible] = useState(false);
   const [isPasswordSecure, setIsPasswordSecure] = useState(true);
   const [isConfirmPasswordSecure, setIsConfirmPasswordSecure] = useState(true);
@@ -54,10 +53,14 @@ export const SignUp = () => {
     resolver: yupResolver(formSchema),
   });
 
+  console.log(formSchema)
+
   const onSubmit = (data: dataFormProps) => {
     setModalVisible(true);
     console.log({ data });
   };
+
+  
 
   return (
     <Container style={{marginTop: StatusBar.currentHeight, justifyContent: "space-between" }}>

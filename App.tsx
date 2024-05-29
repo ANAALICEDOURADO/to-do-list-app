@@ -10,9 +10,9 @@ import { StatusBar } from "react-native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from "@react-navigation/native";
 import { Routes } from "./src/routes";
-
+import { TaskProvider } from "./src/components/TaskProvider/TaskProvider";
 export default function App() {
-  const Stack = createNativeStackNavigator()
+  const Stack = createNativeStackNavigator();
 
   const [fontsLoaded] = useFonts({
     Poppins_400Regular,
@@ -24,11 +24,17 @@ export default function App() {
   if (!fontsLoaded) return;
 
   return (
+    <TaskProvider>
+      <NavigationContainer>
+        <StatusBar
+          translucent
+          backgroundColor={"#208674"}
+          barStyle={"light-content"}
+        />
+        <Routes />
+      </NavigationContainer>
+    </TaskProvider>
 
-    <NavigationContainer>
-      <StatusBar translucent backgroundColor={'#208674'} barStyle={"light-content"} />
-      <Routes />
-    </NavigationContainer>
     /*<>
       <StatusBar translucent barStyle={"light-content"} />
 

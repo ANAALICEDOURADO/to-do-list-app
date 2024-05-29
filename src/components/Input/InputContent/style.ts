@@ -1,17 +1,21 @@
 import styled, { css } from "styled-components/native";
 import { theme } from "../../../global/styles/theme";
+import { InputContentProps } from ".";
 
-type Props = {
+export type Props = {
   isErrored?: boolean;
 };
+
+type CombinedProps =
+  Props & InputContentProps;
 
 export const Container = styled.View<Props>`
   width: 100%;
 `;
 
-export const ContentInput = styled.View<Props>`
+export const ContentInput = styled.View<CombinedProps>`
   width: 100%;
-  height: 50px;
+  height: ${({height}) => height ? height : 50};
   background-color: #fff;
   flex-direction: row;
   align-items: center;

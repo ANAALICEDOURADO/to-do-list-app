@@ -9,12 +9,13 @@ import { Title } from "../../../global/styles/styles";
 import { Button } from "../../../components/Button";
 import { useNavigation } from "@react-navigation/native";
 import { useState } from "react";
+import { AuthScreenNavigationProp } from "../../../routes/auth.routes";
 
 export const SignIn = () => {
-  const { navigate } = useNavigation();
+  const { navigate } = useNavigation<AuthScreenNavigationProp>();
 
-  const goToScreen = () => {
-    navigate("SignUp");
+  const goToScreenSignUp = () => {
+    navigate("SignUp"); //Aqui já deu certo tá vendo?
   };
 
   type dataFormProps = {
@@ -40,7 +41,7 @@ export const SignIn = () => {
 
   const onSubmit = (data: dataFormProps) => {
     console.log({ data });
-    navigate("Main");
+    navigate("Main"); //Esta daq vai ficar fora da tipagem, ela pertence a tipagem do app.routes.tsx e não do auth.routes.tsx, o que vai fazer com que vá para a página é se tem usuário e não a navegação
   };
 
   const [isPasswordSecure, setIsPasswordSecure] = useState(true);
@@ -105,7 +106,7 @@ export const SignIn = () => {
             <Button.Root>
               <Button.Content
                 backgroundColor={theme.colors.white}
-                onPress={goToScreen}
+                onPress={goToScreenSignUp}
               >
                 <Button.Text
                   fontSize={14}

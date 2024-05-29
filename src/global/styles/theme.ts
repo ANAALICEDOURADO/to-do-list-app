@@ -5,7 +5,8 @@ export const theme = {
     third: "#208674",
     white: "#ffffff",
     red: '#ff0000',
-    grey: '#A4A4A4'
+    grey: '#A4A4A4',
+    lime: '#85FD7F',
   },
   fonts: {
     regular: "Poppins_400Regular",
