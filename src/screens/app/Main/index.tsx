@@ -4,44 +4,39 @@ import { Feather } from "@expo/vector-icons";
 import * as S from "./styles";
 import { Task } from "../../../components/Task";
 import { Spacer } from "../../../components/Spacer";
-import { useNavigation } from "@react-navigation/native";
+import { RouteProp, useNavigation } from "@react-navigation/native";
 import { useEffect, useState } from "react";
-import { useRoute, } from "@react-navigation/native";
-import { useTasks } from "../../../components/TaskProvider/TaskProvider";
+import { useRoute } from "@react-navigation/native";
 
 type RootStackParamList = {
   Main: { newTask?: dataTaskProps };
   AddTask: undefined;
 };
 
-type MainScreenRouteProp = RouteProp<RootStackParamList, 'Main'>;
+type MainScreenRouteProp = RouteProp<RootStackParamList, "Main">;
 
 type dataTaskProps = {
   titulo: string;
   subtitulo: string;
+  id: number;
 };
 
 export const Main = () => {
-  //const { tasks } = useTasks();
   const route = useRoute<MainScreenRouteProp>();
-  //const newTaskData = route.params?.newTask;
   const { navigate } = useNavigation();
   const [tasks, setTasks] = useState<dataTaskProps[]>([]);
 
-  
-
-   useEffect(() => {
+  useEffect(() => {
     const newTask = route.params?.newTask;
     if (newTask) {
-      setTasks((tasks) => [...tasks, newTask]);
+      const IdUnico = Math.floor(Math.random() * 10000);
+      setTasks((tasks) => [...tasks, { ...newTask, id: IdUnico }]);
     }
   }, [route.params?.newTask]);
 
-  const handleAddTask = () => {
-    navigate("AddTask");
+  const handleDeleteTask = (id: number) => {
+    setTasks((tasks) => tasks.filter((task) => task.id !== id));
   };
-
-  
 
   return (
     <Container style={{ marginTop: StatusBar.currentHeight }}>
@@ -55,9 +50,14 @@ export const Main = () => {
           <FlatList
             contentContainerStyle={{ paddingBottom: 20, paddingTop: 20 }}
             data={tasks}
-            keyExtractor={(item, index) => index.toString()}
+            keyExtractor={(index) => index.toString()}
             renderItem={({ item }) => (
-              <Task title={item.titulo} subtitle={item.subtitulo} />
+              <Task
+                id={item.id}
+                onDelete={handleDeleteTask}
+                title={item.titulo}
+                subtitle={item.subtitulo}
+              />
             )}
             ItemSeparatorComponent={() => <Spacer height={20} />}
             showsVerticalScrollIndicator={false}
@@ -66,33 +66,6 @@ export const Main = () => {
           />
         </Content>
       </S.Main>
-
-      <S.Footer>
-        <S.BtnFooter>
-          <Feather name="list" size={25} color={theme.colors.white} />
-          <S.BtnFooterText>Todas</S.BtnFooterText>
-        </S.BtnFooter>
-        <S.AddTask
-          onPress={handleAddTask}
-          style={{
-            shadowColor: "#000",
-            shadowOffset: {
-              width: 0,
-              height: 2,
-            },
-            shadowOpacity: 0.25,
-            shadowRadius: 4,
-            elevation: 8,
-          }}
-        >
-          <Feather name="plus" size={30} color={theme.colors.third} />
-        </S.AddTask>
-
-        <S.BtnFooter>
-          <Feather name="check" size={25} color={theme.colors.white} />
-          <S.BtnFooterText>Completas</S.BtnFooterText>
-        </S.BtnFooter>
-      </S.Footer>
     </Container>
   );
 };

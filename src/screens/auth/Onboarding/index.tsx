@@ -8,12 +8,11 @@ import * as S from "./styles";
 import { Spacer } from "../../../components/Spacer";
 import { dataContent } from "./utils/dataContent";
 import { useState } from "react";
-import { useNavigation } from "@react-navigation/native";
+import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 
 const Onboarding = () => {
   const [currentIndex, setCurrentIndex] = useState(1);
   const {navigate} = useNavigation()
-
   const handleNextPress = () => {
     if (currentIndex < Object.keys(dataContent).length) {
       setCurrentIndex((prevIndex) => prevIndex + 1);

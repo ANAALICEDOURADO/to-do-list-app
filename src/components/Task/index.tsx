@@ -8,9 +8,16 @@ import { useState } from "react";
 interface Props extends TouchableOpacityProps {
   title: string;
   subtitle: string;
+  onDelete: () => void;
 }
 
-export const Task = ({ title, subtitle }: Props) => {
+type TaskProps = {
+  id: number;
+};
+
+type CombinedProps = Props & TaskProps;
+
+export const Task = ({ id, title, subtitle, onDelete }: CombinedProps) => {
   const [check, setCheck] = useState(false);
   const { navigate } = useNavigation();
   const handleDetails = () => {
@@ -18,7 +25,7 @@ export const Task = ({ title, subtitle }: Props) => {
   };
 
   const handleDelete = () => {
-    console.log("delete");
+    onDelete(id);
   };
 
   return (
