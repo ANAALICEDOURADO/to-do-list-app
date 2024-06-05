@@ -15,10 +15,10 @@ type RootStackParamList = {
 
 type MainScreenRouteProp = RouteProp<RootStackParamList, "Main">;
 
-type dataTaskProps = {
-  titulo: string;
-  subtitulo: string;
-  id: number;
+export type dataTaskProps = {
+  title: string;
+  subtitle: string;
+  id?: number;
 };
 
 export const Main = () => {
@@ -26,17 +26,23 @@ export const Main = () => {
   const { navigate } = useNavigation();
   const [tasks, setTasks] = useState<dataTaskProps[]>([]);
 
-  useEffect(() => {
+  const handleAddNewTask = () => {
     const newTask = route.params?.newTask;
-    if (newTask) {
-      const IdUnico = Math.floor(Math.random() * 10000);
-      setTasks((tasks) => [...tasks, { ...newTask, id: IdUnico }]);
-    }
-  }, [route.params?.newTask]);
+    if (newTask) setTasks((tasks) => [...tasks, newTask]);
+  };
 
   const handleDeleteTask = (id: number) => {
     setTasks((tasks) => tasks.filter((task) => task.id !== id));
   };
+
+  const handleUpdateTask = (task: {id: string, title: string, subtitle: string}) => {
+    console.log(task)
+    navigate('Details', {task})
+  }
+
+  useEffect(() => {
+    handleAddNewTask();
+  }, [route.params?.newTask]);
 
   return (
     <Container style={{ marginTop: StatusBar.currentHeight }}>
@@ -50,19 +56,17 @@ export const Main = () => {
           <FlatList
             contentContainerStyle={{ paddingBottom: 20, paddingTop: 20 }}
             data={tasks}
-            keyExtractor={(index) => index.toString()}
-            renderItem={({ item }) => (
-              <Task
-                id={item.id}
-                onDelete={handleDeleteTask}
-                title={item.titulo}
-                subtitle={item.subtitulo}
-              />
-            )}
+            keyExtractor={(item) => {
+              const id = item.id;
+              return id?.toString()!;
+            }}
             ItemSeparatorComponent={() => <Spacer height={20} />}
             showsVerticalScrollIndicator={false}
             overScrollMode="never"
             bounces={false}
+            renderItem={({ item }) => (
+              <Task onUpdate={handleUpdateTask} taskData={item} onDelete={handleDeleteTask} />
+            )}
           />
         </Content>
       </S.Main>

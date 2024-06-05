@@ -47,7 +47,10 @@ export const SignIn = () => {
   const [isPasswordSecure, setIsPasswordSecure] = useState(true);
 
   return (
-    <Container style={{ marginTop: StatusBar.currentHeight }}>
+    <Container>
+      <StatusBar
+        hidden
+      />
       <Spacer height={30} />
 
       <View style={styles.areaLogo}>

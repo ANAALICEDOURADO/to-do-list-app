@@ -4,7 +4,7 @@ import { theme } from "../../../global/styles/theme";
 export const Header = styled.View`
   flex: 0.05;
   height: 80px;
-  background-color: ${theme.colors.third};
+  background-color: ${theme.colors.lime};
   justify-content: start;
   padding: 20px 24px;
   flex-direction: row;
@@ -40,7 +40,7 @@ align-items: center;
 `
 
 export const AddTask = styled.TouchableHighlight`
-background-color: ${theme.colors.third};
+background-color: ${theme.colors.lime};
 border-radius: 50px;
 width: 70px;
 height: 70px;

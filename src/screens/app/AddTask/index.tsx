@@ -1,4 +1,4 @@
-import { KeyboardAvoidingView, StatusBar } from "react-native";
+import { StatusBar } from "react-native";
 import { Container, Content, theme } from "../../../global/styles/styles";
 import { Feather } from "@expo/vector-icons";
 import * as S from "./styles";
@@ -8,19 +8,18 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useNavigation } from "@react-navigation/native";
-import { useTasks } from "../../../components/TaskProvider/TaskProvider";
+import { dataTaskProps } from "../Main";
 
 export const AddTask = () => {
   const { navigate } = useNavigation();
-  //const { addTask } = useTasks();
-  type dataTaskProps = {
-    titulo: string;
-    subtitulo: string;
-  };
 
   const taskSchema = yup.object({
-    titulo: yup.string().required("Campo obrigatório").max(20, "Máximo de 20 caracteres"),
-    subtitulo: yup.string().required("Campo Obrigatório"),
+    id: yup.number(),
+    title: yup
+      .string()
+      .required("Campo obrigatório")
+      .max(20, "Máximo de 20 caracteres"),
+    subtitle: yup.string().required("Campo Obrigatório"),
   });
 
   const {
@@ -31,11 +30,14 @@ export const AddTask = () => {
     resolver: yupResolver(taskSchema),
   });
 
-  
   const addNewTask = (data: dataTaskProps) => {
-    console.log({ data });
-    //addTask(data)
-    navigate("Main", {newTask : data});
+    const IdUnico = Math.floor(Math.random() * 10000);
+    const dataTask = {
+      ...data,
+      id: IdUnico,
+    };
+
+    navigate("Main", { newTask: dataTask });
   };
 
   return (
@@ -46,24 +48,25 @@ export const AddTask = () => {
         </S.Back>
         <S.Title>Nova Tarefa</S.Title>
       </S.Header>
+
       <S.Main>
         <Content>
           <Input.Root>
-            <Input.Content errors={errors?.titulo!}>
+            <Input.Content errors={errors?.title!}>
               <Input.TextInput
                 placeholder="Título"
                 control={control}
-                name="titulo"
+                name="title"
               />
             </Input.Content>
           </Input.Root>
           <Spacer height={20} />
           <Input.Root>
-            <Input.Content height={200} errors={errors?.subtitulo!}>
+            <Input.Content height={200} errors={errors?.subtitle!}>
               <Input.TextInput
                 placeholder="Subtítulo"
                 control={control}
-                name="subtitulo"
+                name="subtitle"
               />
             </Input.Content>
           </Input.Root>

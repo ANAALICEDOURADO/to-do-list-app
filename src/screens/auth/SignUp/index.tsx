@@ -15,7 +15,6 @@ import { Feather } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 
 export const SignUp = () => {
-
   const [modalVisible, setModalVisible] = useState(false);
   const [isPasswordSecure, setIsPasswordSecure] = useState(true);
   const [isConfirmPasswordSecure, setIsConfirmPasswordSecure] = useState(true);
@@ -53,17 +52,22 @@ export const SignUp = () => {
     resolver: yupResolver(formSchema),
   });
 
-  console.log(formSchema)
+  console.log(formSchema);
 
   const onSubmit = (data: dataFormProps) => {
     setModalVisible(true);
     console.log({ data });
   };
 
-  
-
   return (
-    <Container style={{marginTop: StatusBar.currentHeight, justifyContent: "space-between" }}>
+    <Container
+      style={{
+        justifyContent: "space-between",
+      }}
+    >
+      <StatusBar
+        hidden
+      />
       <Elipse9 style={styles.elipse} />
       <Elipse10 style={styles.elipse10} />
 
@@ -140,7 +144,9 @@ export const SignUp = () => {
             <Input.IconPassword
               secureTextActive={isConfirmPasswordSecure}
               errors={!!errors?.confirmPassword}
-              onPressButton={() => setIsConfirmPasswordSecure(!isConfirmPasswordSecure)}
+              onPressButton={() =>
+                setIsConfirmPasswordSecure(!isConfirmPasswordSecure)
+              }
             />
           </Input.Content>
         </Input.Root>

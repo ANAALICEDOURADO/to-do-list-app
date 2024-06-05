@@ -4,28 +4,24 @@ import { theme } from "../../global/styles/theme";
 import { StyleSheet, TouchableOpacityProps } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useState } from "react";
+import { dataTaskProps } from "../../screens/app/Main";
 
 interface Props extends TouchableOpacityProps {
-  title: string;
-  subtitle: string;
-  onDelete: () => void;
+  onDelete: (id: number) => void;
+  onUpdate: () => void
+  taskData: dataTaskProps;
 }
 
-type TaskProps = {
-  id: number;
-};
-
-type CombinedProps = Props & TaskProps;
-
-export const Task = ({ id, title, subtitle, onDelete }: CombinedProps) => {
+export const Task = ({ taskData, onDelete, onUpdate }: Props) => {
   const [check, setCheck] = useState(false);
   const { navigate } = useNavigation();
-  const handleDetails = () => {
-    navigate("Details");
-  };
+
+  const handleUpdate = () => {
+    onUpdate(taskData)
+  }
 
   const handleDelete = () => {
-    onDelete(id);
+    onDelete(taskData.id);
   };
 
   return (
@@ -39,20 +35,20 @@ export const Task = ({ id, title, subtitle, onDelete }: CombinedProps) => {
         ]}
       >
         <S.AreaTextos style={{ flexWrap: "wrap" }}>
-          <S.Title>{title}</S.Title>
+          <S.Title>{taskData.title}</S.Title>
           <S.Subtitle numberOfLines={1} ellipsizeMode="tail">
-            {subtitle}
+            {taskData.subtitle}
           </S.Subtitle>
         </S.AreaTextos>
         <S.AreaBtn>
-          <S.Btn onPress={handleDetails}>
+          <S.Btn onPress={handleUpdate}>
             <Feather name="edit" size={25} color={theme.colors.third} />
           </S.Btn>
           <S.Btn onPress={handleDelete}>
             <Feather name="trash-2" size={25} color={theme.colors.third} />
           </S.Btn>
           <S.Btn onPress={() => setCheck(!check)}>
-            {check === true ? (
+            {check ? (
               <Feather
                 name="check-square"
                 size={25}

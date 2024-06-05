@@ -12,7 +12,7 @@ import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 
 const Onboarding = () => {
   const [currentIndex, setCurrentIndex] = useState(1);
-  const {navigate} = useNavigation()
+  const { navigate } = useNavigation();
   const handleNextPress = () => {
     if (currentIndex < Object.keys(dataContent).length) {
       setCurrentIndex((prevIndex) => prevIndex + 1);
@@ -20,11 +20,16 @@ const Onboarding = () => {
   };
 
   const handleStartBtn = () => {
-    navigate('SignIn')
+    navigate("SignIn");
   };
 
   return (
     <Container style={{ marginTop: StatusBar.currentHeight }}>
+      <StatusBar
+        translucent
+        backgroundColor={"#FFFFFF"}
+        barStyle={"light-content"}
+      />
       {currentIndex === 1 ? (
         <LogoOnboarding1 width={400} height={400} />
       ) : (

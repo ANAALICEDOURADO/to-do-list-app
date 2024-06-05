@@ -8,43 +8,58 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useNavigation } from "@react-navigation/native";
-import { useTasks } from "../../../components/TaskProvider/TaskProvider";
 import { useRoute } from "@react-navigation/native";
+import { useEffect } from "react";
+import { Subtitle } from "../../auth/Onboarding/styles";
+
+type dataTaskProps = {
+  id?: number;
+  title: string;
+  subtitle: string;
+}
 
 export const Details = () => {
+  const route = useRoute()
+  const { task } = route?.params;
   const { navigate } = useNavigation();
-  //const { addTask } = useTasks();
-
-  type dataTaskProps = {
-    titulo: string;
-    subtitulo: string;
-  }
   
 
   const taskSchema = yup.object({
-    titulo: yup.string().required("Campo obrigatório").max(20, "Máximo de 20 caracteres"),
-    subtitulo: yup.string().required("Campo Obrigatório"),
+    id: yup.number(),
+    title: yup.string().required("Campo obrigatório").max(20, "Máximo de 20 caracteres"),
+    subtitle: yup.string().required("Campo Obrigatório"),
   });
 
   const {
     control,
     handleSubmit,
     formState: { errors },
+    setValue
   } = useForm<dataTaskProps>({
     resolver: yupResolver(taskSchema),
+    defaultValues:{
+      id: task.id,
+      title: task.title,
+      subtitle: task.subtitle
+    }
   });
 
-
-
+  useEffect(()=>{
+    setValue('id', task.id);
+    setValue('title', task.title);
+    setValue('subtitle', task.subtitle);
+  },[task, setValue])
   
   const updateTask = (data: dataTaskProps) => {
-    console.log({ data });
-    //addTask(data)
     navigate("Main");
+    console.log(data)
   };
 
   return (
     <Container style={{ marginTop: StatusBar.currentHeight }}>
+      <StatusBar translucent
+          backgroundColor={"#85FD7F"}
+          barStyle={"light-content"}/>
       <S.Header>
         <S.Back onPress={() => navigate("Main")}>
           <Feather name="arrow-left" size={25} color={theme.colors.white} />
@@ -54,21 +69,21 @@ export const Details = () => {
       <S.Main>
         <Content>
           <Input.Root>
-            <Input.Content errors={errors?.titulo!}>
+            <Input.Content errors={errors?.title!}>
               <Input.TextInput
                 placeholder="Título"
                 control={control}
-                name="titulo"
+                name="title"
               />
             </Input.Content>
           </Input.Root>
           <Spacer height={20} />
           <Input.Root>
-            <Input.Content height={200} errors={errors?.subtitulo!}>
+            <Input.Content height={200} errors={errors?.subtitle!}>
               <Input.TextInput
                 placeholder="Subtítulo"
                 control={control}
-                name="subtitulo"
+                name="subtitle"
               />
             </Input.Content>
           </Input.Root>
@@ -88,7 +103,7 @@ export const Details = () => {
             elevation: 8,
           }}
         >
-          <Feather name="check" size={30} color={theme.colors.white} />
+          <Feather name="check" size={30} color={theme.colors.third} />
         </S.AddTask>
       </S.Footer>
     </Container>
