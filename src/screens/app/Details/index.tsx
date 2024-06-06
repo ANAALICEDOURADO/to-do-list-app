@@ -16,17 +16,19 @@ type dataTaskProps = {
   id?: number;
   title: string;
   subtitle: string;
-}
+};
 
 export const Details = () => {
-  const route = useRoute()
+  const route = useRoute();
   const { task } = route?.params;
   const { navigate } = useNavigation();
-  
 
   const taskSchema = yup.object({
     id: yup.number(),
-    title: yup.string().required("Campo obrigatório").max(20, "Máximo de 20 caracteres"),
+    title: yup
+      .string()
+      .required("Campo obrigatório")
+      .max(20, "Máximo de 20 caracteres"),
     subtitle: yup.string().required("Campo Obrigatório"),
   });
 
@@ -34,32 +36,34 @@ export const Details = () => {
     control,
     handleSubmit,
     formState: { errors },
-    setValue
+    setValue,
   } = useForm<dataTaskProps>({
     resolver: yupResolver(taskSchema),
-    defaultValues:{
+    defaultValues: {
       id: task.id,
       title: task.title,
-      subtitle: task.subtitle
-    }
+      subtitle: task.subtitle,
+    },
   });
 
-  useEffect(()=>{
-    setValue('id', task.id);
-    setValue('title', task.title);
-    setValue('subtitle', task.subtitle);
-  },[task, setValue])
-  
+  useEffect(() => {
+    setValue("id", task.id);
+    setValue("title", task.title);
+    setValue("subtitle", task.subtitle);
+  }, [task, setValue]);
+
   const updateTask = (data: dataTaskProps) => {
-    navigate("Main");
-    console.log(data)
+    navigate("Main", { updatedTask: data });
+    console.log(data);
   };
 
   return (
     <Container style={{ marginTop: StatusBar.currentHeight }}>
-      <StatusBar translucent
-          backgroundColor={"#85FD7F"}
-          barStyle={"light-content"}/>
+      <StatusBar
+        translucent
+        backgroundColor={"#85FD7F"}
+        barStyle={"light-content"}
+      />
       <S.Header>
         <S.Back onPress={() => navigate("Main")}>
           <Feather name="arrow-left" size={25} color={theme.colors.white} />

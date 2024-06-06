@@ -35,7 +35,7 @@ export const Task = ({ taskData, onDelete, onUpdate }: Props) => {
         ]}
       >
         <S.AreaTextos style={{ flexWrap: "wrap" }}>
-          <S.Title>{taskData.title}</S.Title>
+          <S.Title numberOfLines={1} ellipsizeMode="tail">{taskData.title}</S.Title>
           <S.Subtitle numberOfLines={1} ellipsizeMode="tail">
             {taskData.subtitle}
           </S.Subtitle>

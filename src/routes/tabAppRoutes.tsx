@@ -61,7 +61,7 @@ export const TabRoutes = () => {
       />
 
       <Tab.Screen
-        name="AddTask"
+        name="CreateTask"
         component={Main}
         options={{
           tabBarButton: ({ children }) => {

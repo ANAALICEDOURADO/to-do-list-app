@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 import { useRoute } from "@react-navigation/native";
 
 type RootStackParamList = {
-  Main: { newTask?: dataTaskProps };
+  Main: { newTask?: dataTaskProps; updatedTask?: dataTaskProps };
   AddTask: undefined;
 };
 
@@ -26,23 +26,41 @@ export const Main = () => {
   const { navigate } = useNavigation();
   const [tasks, setTasks] = useState<dataTaskProps[]>([]);
 
+  const handleDeleteTask = (id: number) => {
+    setTasks((tasks) => tasks.filter((task) => task.id !== id));
+  };
+
   const handleAddNewTask = () => {
     const newTask = route.params?.newTask;
     if (newTask) setTasks((tasks) => [...tasks, newTask]);
   };
 
-  const handleDeleteTask = (id: number) => {
-    setTasks((tasks) => tasks.filter((task) => task.id !== id));
+  const handleUpdateTask = (task: {
+    id: string;
+    title: string;
+    subtitle: string;
+  }) => {
+    console.log(task);
+    navigate("Details", { task });
   };
 
-  const handleUpdateTask = (task: {id: string, title: string, subtitle: string}) => {
-    console.log(task)
-    navigate('Details', {task})
-  }
+  const updatedTasks = () => {
+    const updated = route.params?.updatedTask;
+    if (updated)
+      setTasks((tasks) =>
+        tasks.map((task) => (task.id === updated.id ? updated : task))
+      );
+  };
 
   useEffect(() => {
     handleAddNewTask();
   }, [route.params?.newTask]);
+
+  useEffect(() => {
+    updatedTasks();
+  }, [route.params?.updatedTask]);
+
+  console.log({ tasks });
 
   return (
     <Container style={{ marginTop: StatusBar.currentHeight }}>
@@ -65,7 +83,11 @@ export const Main = () => {
             overScrollMode="never"
             bounces={false}
             renderItem={({ item }) => (
-              <Task onUpdate={handleUpdateTask} taskData={item} onDelete={handleDeleteTask} />
+              <Task
+                onUpdate={handleUpdateTask}
+                taskData={item}
+                onDelete={handleDeleteTask}
+              />
             )}
           />
         </Content>
