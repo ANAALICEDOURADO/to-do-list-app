@@ -8,24 +8,35 @@ import { dataTaskProps } from "../../screens/app/Main";
 
 interface Props extends TouchableOpacityProps {
   onDelete: (id: number) => void;
-  onUpdate: () => void
+  onUpdate: (taskData: dataTaskProps) => void;
+  onOpenTask: (taskData: dataTaskProps) => void;
+  onCheck: (check: boolean) => void;
   taskData: dataTaskProps;
 }
 
-export const Task = ({ taskData, onDelete, onUpdate }: Props) => {
+export const Task = ({ taskData, onDelete, onUpdate, onOpenTask, onCheck }: Props) => {
   const [check, setCheck] = useState(false);
   const { navigate } = useNavigation();
 
   const handleUpdate = () => {
-    onUpdate(taskData)
-  }
+    onUpdate(taskData);
+  };
 
   const handleDelete = () => {
     onDelete(taskData.id);
   };
 
+  const openTask = () => {
+    onOpenTask(taskData)
+  }
+
+  const handleCheck = () => {
+    setCheck(!check)
+    onCheck(!check)
+  }
+
   return (
-    <S.TaskOpacity>
+    <S.TaskOpacity onPress={openTask} >
       <S.AreaTask
         style={[
           styles.areaTask,
@@ -35,7 +46,9 @@ export const Task = ({ taskData, onDelete, onUpdate }: Props) => {
         ]}
       >
         <S.AreaTextos style={{ flexWrap: "wrap" }}>
-          <S.Title numberOfLines={1} ellipsizeMode="tail">{taskData.title}</S.Title>
+          <S.Title numberOfLines={2} ellipsizeMode="tail">
+            {taskData.title}
+          </S.Title>
           <S.Subtitle numberOfLines={1} ellipsizeMode="tail">
             {taskData.subtitle}
           </S.Subtitle>
@@ -47,7 +60,7 @@ export const Task = ({ taskData, onDelete, onUpdate }: Props) => {
           <S.Btn onPress={handleDelete}>
             <Feather name="trash-2" size={25} color={theme.colors.third} />
           </S.Btn>
-          <S.Btn onPress={() => setCheck(!check)}>
+          <S.Btn onPress={handleCheck}>
             {check ? (
               <Feather
                 name="check-square"

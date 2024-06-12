@@ -30,6 +30,8 @@ export const TextInput = ({
       placeholderTextColor={theme.colors.grey}
       onChangeText={field.onChange}
       value={field.value}
+      multiline
+      textAlignVertical="top"
       secureTextEntry={isActivePassword}
       {...rest}
     />

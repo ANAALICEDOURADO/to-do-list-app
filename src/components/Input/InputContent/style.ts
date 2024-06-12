@@ -18,6 +18,7 @@ export const ContentInput = styled.View<CombinedProps>`
   height: ${({height}) => height ? height : 50};
   background-color: #fff;
   flex-direction: row;
+  justify-content: ;
   align-items: center;
   border-width: 1px;
   border-color: ${theme.colors.secondary};

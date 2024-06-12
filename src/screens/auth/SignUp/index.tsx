@@ -161,11 +161,13 @@ export const SignUp = () => {
 
         <Modal1.Root>
           <Modal1.Content modalVisible={modalVisible}>
-            <Modal1.Icon icon={Feather} />
+            <Modal1.Icon name="check" size={30} color={theme.colors.third} icon={Feather} />
             <Spacer height={30} />
             <Modal1.Title title="Perfil criado com sucesso!" />
             <Modal1.Subtitle subtitle="Agora você pode entrar em seu novo perfil a qualquer momento." />
-            <Modal1.Actions onClose={() => setModalVisible(false)} />
+            <Modal1.Actions onClose={() => setModalVisible(false)}>
+              <Modal1.Title title="Continuar" />
+            </Modal1.Actions>
           </Modal1.Content>
         </Modal1.Root>
       </Content>

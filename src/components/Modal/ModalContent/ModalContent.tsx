@@ -1,13 +1,15 @@
 import { Modal, ModalProps, StyleSheet, View } from "react-native";
 import { Content, theme } from "../../../global/styles/styles";
 import { ReactNode } from "react";
+import * as S from './styles'
 
-type Props = ModalProps & {
+export type Props = ModalProps & {
     modalVisible: boolean;
     children: ReactNode;
+    backgroundColor?: string;
 }
 
-export const ModalContent = ({modalVisible, children, ...rest}: Props) => {
+export const ModalContent = ({backgroundColor, modalVisible, children, ...rest}: Props) => {
     return (
         <Modal
         animationType="fade"
@@ -16,9 +18,9 @@ export const ModalContent = ({modalVisible, children, ...rest}: Props) => {
         {...rest}
       >
         <Content style={styles.centeredView} >
-          <View style={styles.modalView}>
+          <S.ModalView backgroundColor={backgroundColor} style={styles.modalView}>
             {children}
-          </View>
+          </S.ModalView>
         </Content>
       </Modal>
     )
@@ -32,11 +34,6 @@ const styles = StyleSheet.create({
       marginTop: 22,
     },
     modalView: {
-      margin: 20,
-      backgroundColor: "white",
-      borderRadius: 15,
-      padding: 35,
-      alignItems: "center",
       shadowColor: theme.colors.third,
       shadowOffset: {
         width: 0,

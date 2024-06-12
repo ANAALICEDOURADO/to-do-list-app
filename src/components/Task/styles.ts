@@ -12,7 +12,8 @@ export const AreaTask =  styled.View`
     justify-content: space-between;
     padding: 20px;
     align-items: center;
-    max-height: 110px;
+    max-height: 130px;
+    min-height: 130px;
 `
 
 export const AreaTextos = styled.View`
@@ -21,6 +22,7 @@ export const Title = styled.Text`
 font-family: ${theme.fonts.semibold};
 color: ${theme.colors.third};
 font-size: 20px;
+max-width: 160px;
 `
 export const Subtitle = styled.Text`
 font-family: ${theme.fonts.medium};

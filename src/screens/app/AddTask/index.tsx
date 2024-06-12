@@ -18,7 +18,7 @@ export const AddTask = () => {
     title: yup
       .string()
       .required("Campo obrigatório")
-      .max(20, "Máximo de 20 caracteres"),
+      .max(30, "Máximo de 30 caracteres"),
     subtitle: yup.string().required("Campo Obrigatório"),
   });
 

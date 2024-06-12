@@ -7,6 +7,7 @@ import { Spacer } from "../../../components/Spacer";
 import { RouteProp, useNavigation } from "@react-navigation/native";
 import { useEffect, useState } from "react";
 import { useRoute } from "@react-navigation/native";
+import { Modal1 } from "../../../components/Modal";
 
 type RootStackParamList = {
   Main: { newTask?: dataTaskProps; updatedTask?: dataTaskProps };
@@ -25,6 +26,9 @@ export const Main = () => {
   const route = useRoute<MainScreenRouteProp>();
   const { navigate } = useNavigation();
   const [tasks, setTasks] = useState<dataTaskProps[]>([]);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [selectedTask, setSelectedTask] = useState<dataTaskProps | null>(null);
+  const [taskChecked, setTaskChecked] = useState(false)
 
   const handleDeleteTask = (id: number) => {
     setTasks((tasks) => tasks.filter((task) => task.id !== id));
@@ -51,6 +55,17 @@ export const Main = () => {
         tasks.map((task) => (task.id === updated.id ? updated : task))
       );
   };
+
+  const handleOpenTaskModal = (task: dataTaskProps) => {
+    setSelectedTask(task);
+    setModalVisible(true);
+    console.log({ task });
+  };
+
+  const handleCheckState = (check: boolean) => {
+    const isChecked = check;
+    setTaskChecked(isChecked)
+  }
 
   useEffect(() => {
     handleAddNewTask();
@@ -84,13 +99,55 @@ export const Main = () => {
             bounces={false}
             renderItem={({ item }) => (
               <Task
+                onOpenTask={() => handleOpenTaskModal(item)}
                 onUpdate={handleUpdateTask}
                 taskData={item}
                 onDelete={handleDeleteTask}
+                onCheck={handleCheckState}
               />
             )}
           />
         </Content>
+
+        <Modal1.Root marginTop={50}>
+          <Modal1.Content
+            backgroundColor={theme.colors.white}
+            modalVisible={modalVisible}
+          >
+            <Modal1.View
+              alignItems="center"
+              justifyContent="space-between"
+              flexDirection="row"
+            >
+              <Modal1.Title title="Tarefa" fontSize={22} color={theme.colors.lime} />
+              <Modal1.Actions
+                borderRadius={50}
+                backgroundColor={theme.colors.white}
+                padding={1}
+                height={25}
+                onClose={() => setModalVisible(false)}
+              >
+                <Modal1.Icon
+                  name="x"
+                  size={25}
+                  color={theme.colors.lime}
+                  icon={Feather}
+                />
+              </Modal1.Actions>
+            </Modal1.View>
+            <Spacer height={20} />
+            <Modal1.View alignItems="flex-start">
+              <Modal1.Title
+                title={selectedTask?.title || "ahahaha"}
+                textAlign="justify"
+              />
+              <Modal1.Subtitle
+                subtitle={selectedTask?.subtitle || "hohohohoh"}
+                textAlign="justify"
+              />
+            </Modal1.View>
+          </Modal1.Content>
+        </Modal1.Root>
       </S.Main>
     </Container>
   );
