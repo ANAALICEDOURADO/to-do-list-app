@@ -8,9 +8,14 @@ import { RouteProp, useNavigation } from "@react-navigation/native";
 import { useEffect, useState } from "react";
 import { useRoute } from "@react-navigation/native";
 import { Modal1 } from "../../../components/Modal";
+import { useTasks } from "../../../components/TaskProvider/TaskProvider";
 
 type RootStackParamList = {
-  Main: { newTask?: dataTaskProps; updatedTask?: dataTaskProps };
+  Main: {
+    newTask?: dataTaskProps;
+    updatedTask?: dataTaskProps;
+    showCompleted?: boolean;
+  };
   AddTask: undefined;
 };
 
@@ -20,23 +25,20 @@ export type dataTaskProps = {
   title: string;
   subtitle: string;
   id?: number;
+  check: boolean;
 };
 
 export const Main = () => {
   const route = useRoute<MainScreenRouteProp>();
   const { navigate } = useNavigation();
-  const [tasks, setTasks] = useState<dataTaskProps[]>([]);
+  const { tasks, addTask, deleteTask, updateTask, checkTask } = useTasks();
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedTask, setSelectedTask] = useState<dataTaskProps | null>(null);
-  const [taskChecked, setTaskChecked] = useState(false)
-
-  const handleDeleteTask = (id: number) => {
-    setTasks((tasks) => tasks.filter((task) => task.id !== id));
-  };
+  const showCompleted = route.params?.showCompleted ?? false;
 
   const handleAddNewTask = () => {
     const newTask = route.params?.newTask;
-    if (newTask) setTasks((tasks) => [...tasks, newTask]);
+    if (newTask) addTask(newTask);
   };
 
   const handleUpdateTask = (task: {
@@ -44,16 +46,12 @@ export const Main = () => {
     title: string;
     subtitle: string;
   }) => {
-    console.log(task);
     navigate("Details", { task });
   };
 
   const updatedTasks = () => {
     const updated = route.params?.updatedTask;
-    if (updated)
-      setTasks((tasks) =>
-        tasks.map((task) => (task.id === updated.id ? updated : task))
-      );
+    if (updated) updateTask(updated);
   };
 
   const handleOpenTaskModal = (task: dataTaskProps) => {
@@ -61,11 +59,6 @@ export const Main = () => {
     setModalVisible(true);
     console.log({ task });
   };
-
-  const handleCheckState = (check: boolean) => {
-    const isChecked = check;
-    setTaskChecked(isChecked)
-  }
 
   useEffect(() => {
     handleAddNewTask();
@@ -75,20 +68,26 @@ export const Main = () => {
     updatedTasks();
   }, [route.params?.updatedTask]);
 
-  console.log({ tasks });
+  const filteredTasks = showCompleted
+    ? tasks.filter((task) => task.check)
+    : tasks;
+  console.log("Show Completed: ", showCompleted);
+  console.log("Filtered Tasks: ", filteredTasks);
 
   return (
     <Container style={{ marginTop: StatusBar.currentHeight }}>
       <S.Header>
         <S.Title>MINHAS TAREFAS</S.Title>
-        <Feather name="calendar" size={25} color={theme.colors.white} />
+        <S.CalendarBtn onPress={() => navigate('Info')}>
+          <Feather name="calendar" size={25} color={theme.colors.white} />
+        </S.CalendarBtn>
       </S.Header>
 
       <S.Main>
         <Content>
           <FlatList
             contentContainerStyle={{ paddingBottom: 20, paddingTop: 20 }}
-            data={tasks}
+            data={filteredTasks}
             keyExtractor={(item) => {
               const id = item.id;
               return id?.toString()!;
@@ -102,8 +101,8 @@ export const Main = () => {
                 onOpenTask={() => handleOpenTaskModal(item)}
                 onUpdate={handleUpdateTask}
                 taskData={item}
-                onDelete={handleDeleteTask}
-                onCheck={handleCheckState}
+                onDelete={deleteTask}
+                onCheck={() => checkTask(item.id)}
               />
             )}
           />
@@ -119,7 +118,11 @@ export const Main = () => {
               justifyContent="space-between"
               flexDirection="row"
             >
-              <Modal1.Title title="Tarefa" fontSize={22} color={theme.colors.lime} />
+              <Modal1.Title
+                title="Tarefa"
+                fontSize={22}
+                color={theme.colors.lime}
+              />
               <Modal1.Actions
                 borderRadius={50}
                 backgroundColor={theme.colors.white}

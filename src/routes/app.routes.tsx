@@ -3,6 +3,7 @@ import { Main } from "../screens/app/Main";
 import { AddTask } from "../screens/app/AddTask";
 import { Details } from "../screens/app/Details";
 import { TabRoutes } from "./tabAppRoutes";
+import { Info } from "../screens/app/Info/Info";
 
 export const AppRoutes = () => {
   const Stack = createNativeStackNavigator();
@@ -17,6 +18,7 @@ export const AppRoutes = () => {
       <Stack.Screen name="tab" component={TabRoutes} />
       <Stack.Screen name="AddTask" component={AddTask} />
       <Stack.Screen name="Details" component={Details} /> 
+      <Stack.Screen name="Info" component={Info} />
     </Stack.Navigator>
   );
 };

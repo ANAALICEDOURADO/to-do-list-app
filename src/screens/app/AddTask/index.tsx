@@ -9,9 +9,11 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useNavigation } from "@react-navigation/native";
 import { dataTaskProps } from "../Main";
+import { useTasks } from "../../../components/TaskProvider/TaskProvider";
 
 export const AddTask = () => {
   const { navigate } = useNavigation();
+  const {addTask} = useTasks()
 
   const taskSchema = yup.object({
     id: yup.number(),
@@ -36,8 +38,10 @@ export const AddTask = () => {
       ...data,
       id: IdUnico,
     };
-
-    navigate("Main", { newTask: dataTask });
+    addTask(dataTask)
+    navigate("Main");
+    console.log(dataTask)
+    //navigate("Main", { newTask: dataTask });
   };
 
   return (

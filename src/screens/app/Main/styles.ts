@@ -11,6 +11,10 @@ export const Header = styled.View`
   align-items: baseline;
 `;
 
+export const CalendarBtn = styled.TouchableOpacity`
+  
+`
+
 export const Title = styled.Text`
   font-size: 25px;
   color: ${theme.colors.white};

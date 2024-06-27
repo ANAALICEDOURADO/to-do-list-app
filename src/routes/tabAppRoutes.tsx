@@ -1,10 +1,11 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { useNavigation } from "@react-navigation/native";
-import { Main } from "../screens/app/Main";
+import { Main, dataTaskProps } from "../screens/app/Main";
 import { View, Text, TouchableOpacity, Platform } from "react-native";
 import React from "react";
 import { Feather } from "@expo/vector-icons";
 import { theme } from "../global/styles/theme";
+
 
 export const TabRoutes = () => {
   const Tab = createBottomTabNavigator();
@@ -36,25 +37,28 @@ export const TabRoutes = () => {
         options={{
           tabBarIcon: ({ focused }) => {
             return (
-              <View
+              <TouchableOpacity
                 style={{
                   alignItems: "center",
                   justifyContent: "center",
                 }}
+                onPress={() => navigate('Main', { showCompleted: false })}
               >
                 <Feather name="list" size={25} color={theme.colors.white} />
 
                 <Text
                   style={{
                     fontSize: 12,
-                    color: focused ? theme.colors.white : theme.colors.secondary,
+                    color: focused
+                      ? theme.colors.white
+                      : theme.colors.secondary,
                     marginTop: 6,
                     fontFamily: theme.fonts.semibold,
                   }}
                 >
                   Todas
                 </Text>
-              </View>
+              </TouchableOpacity>
             );
           },
         }}
@@ -98,28 +102,32 @@ export const TabRoutes = () => {
       <Tab.Screen
         name="TasksDone"
         component={Main}
+        initialParams={{showCompleted: true}}
         options={{
           tabBarIcon: ({ focused }) => {
             return (
-              <View
+              <TouchableOpacity
                 style={{
                   alignItems: "center",
                   justifyContent: "center",
                 }}
+                onPress={() => navigate('Main', { showCompleted: true })}
               >
                 <Feather name="check" size={25} color={theme.colors.white} />
 
                 <Text
                   style={{
                     fontSize: 12,
-                    color: focused ? theme.colors.white : theme.colors.secondary,
+                    color: focused
+                      ? theme.colors.white
+                      : theme.colors.secondary,
                     marginTop: 6,
                     fontFamily: theme.fonts.semibold,
                   }}
                 >
                   Completas
                 </Text>
-              </View>
+              </TouchableOpacity>
             );
           },
         }}

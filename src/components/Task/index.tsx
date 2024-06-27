@@ -10,13 +10,12 @@ interface Props extends TouchableOpacityProps {
   onDelete: (id: number) => void;
   onUpdate: (taskData: dataTaskProps) => void;
   onOpenTask: (taskData: dataTaskProps) => void;
-  onCheck: (check: boolean) => void;
+  onCheck: (id: number) => void;
   taskData: dataTaskProps;
 }
 
 export const Task = ({ taskData, onDelete, onUpdate, onOpenTask, onCheck }: Props) => {
-  const [check, setCheck] = useState(false);
-  const { navigate } = useNavigation();
+  const [check, setCheck] = useState(taskData.check);
 
   const handleUpdate = () => {
     onUpdate(taskData);
@@ -32,7 +31,8 @@ export const Task = ({ taskData, onDelete, onUpdate, onOpenTask, onCheck }: Prop
 
   const handleCheck = () => {
     setCheck(!check)
-    onCheck(!check)
+    onCheck(taskData.id)
+    console.log(taskData.check)
   }
 
   return (
