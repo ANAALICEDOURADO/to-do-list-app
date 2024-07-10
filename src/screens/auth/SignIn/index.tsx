@@ -15,7 +15,7 @@ export const SignIn = () => {
   const { navigate } = useNavigation<AuthScreenNavigationProp>();
 
   const goToScreenSignUp = () => {
-    navigate("SignUp"); //Aqui já deu certo tá vendo?
+    navigate("SignUp"); 
   };
 
   type dataFormProps = {

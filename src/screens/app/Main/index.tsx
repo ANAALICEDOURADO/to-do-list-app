@@ -79,7 +79,7 @@ export const Main = () => {
       <S.Header>
         <S.Title>MINHAS TAREFAS</S.Title>
         <S.CalendarBtn onPress={() => navigate('Info')}>
-          <Feather name="calendar" size={25} color={theme.colors.white} />
+          <Feather name="user" size={25} color={theme.colors.white} />
         </S.CalendarBtn>
       </S.Header>
 
